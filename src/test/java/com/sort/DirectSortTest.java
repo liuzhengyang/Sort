@@ -3,8 +3,11 @@ package com.sort;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -27,10 +30,40 @@ public class DirectSortTest {
 
 
     @Test
-    public void testShellSort() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void testShellSort() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
 //        testSort(ShellSort.class);
 //        testSort(SelectSort.class);
         testSort(QuickSort.class);
+
+
+        String path = ArrayUtil.class.getResource("/com/sort/ArrayUtil.class").getPath();
+        String classPrefix = "com.sort.";
+        System.out.println(path);
+        File file = new File(path).getParentFile();
+        System.out.println(file.exists());
+        System.out.println(Arrays.toString(file.list((dir, name) ->name.endsWith("Sort.class"))));
+        System.out.println(Arrays.toString(file.list()));
+        System.out.println(file.exists());
+        for(File f : file.listFiles((dir, name) -> name.endsWith("Sort.class"))){
+            Class<?> clazz = Class.forName(classPrefix+f.getName().replace(".class", ""));
+            testSort(clazz);
+        }
+    }
+
+    class TestClassLoader extends URLClassLoader{
+
+        public TestClassLoader(URL[] urls, ClassLoader parent) {
+            super(urls, parent);
+        }
+
+        public Class<?> defineClassByByteArray(String clazzName, byte[] bytes){
+            return this.defineClass(clazzName, bytes, 0, bytes.length);
+        }
+
+        @Override
+        public Class<?> loadClass(String name) throws ClassNotFoundException {
+            return super.loadClass(name);
+        }
     }
 
     private static void testSort(Class<?> clazz) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
@@ -40,8 +73,10 @@ public class DirectSortTest {
         Object obj = clazz.newInstance();
         sortMethod.invoke(obj, arr);
         Arrays.sort(arr2);
-        System.out.println("MySort " + join(arr, ","));
+        System.out.println(clazz.getName() + " " + join(arr, ","));
         System.out.println("Arrays.sort " + join(arr2, ","));
         Assert.assertArrayEquals(arr, arr2);
+
+
     }
 }
