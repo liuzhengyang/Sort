@@ -19,7 +19,7 @@ public class ArrayUtil {
     public static <T> void swap(int[] arr, int i, int j){
         int temp = arr[i];
         arr[i] = arr[j];
-        arr[j] = arr[i];
+        arr[j] = temp;
     }
 
     public static void printArray(int[] array){
@@ -30,15 +30,11 @@ public class ArrayUtil {
 
 
     public static int[] generateRandomNumberArray(){
-        int randomNumber = 10 + random.nextInt(100);
-//        int randomNumber = 10;
+//        int randomNumber = 10 + random.nextInt(100);
+        int randomNumber = 10;
         int[] arr = new int[randomNumber];
         for(int i = 0; i < randomNumber; i++){
-            if(random.nextBoolean()){
-                arr[i] = -random.nextInt(1000);
-            }else{
-                arr[i] = random.nextInt(1000);
-            }
+            arr[i] = random.nextInt(100);
         }
         return arr;
     }

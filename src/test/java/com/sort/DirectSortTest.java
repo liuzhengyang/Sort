@@ -28,7 +28,9 @@ public class DirectSortTest {
 
     @Test
     public void testShellSort() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        testSort(ShellSort.class);
+//        testSort(ShellSort.class);
+//        testSort(SelectSort.class);
+        testSort(QuickSort.class);
     }
 
     private static void testSort(Class<?> clazz) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
@@ -38,8 +40,8 @@ public class DirectSortTest {
         Object obj = clazz.newInstance();
         sortMethod.invoke(obj, arr);
         Arrays.sort(arr2);
-        System.out.println(join(arr, ","));
-        System.out.println(join(arr2, ","));
+        System.out.println("MySort " + join(arr, ","));
+        System.out.println("Arrays.sort " + join(arr2, ","));
         Assert.assertArrayEquals(arr, arr2);
     }
 }
