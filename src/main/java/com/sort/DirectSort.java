@@ -8,7 +8,7 @@ import static com.sort.ArrayUtil.*;
  * 直接插入排序
  * Created by liuzhengyang on 2015/3/27.
  */
-public class DirectSort {
+public class DirectSort{
 
     public <T> void sort(T[] array){
 

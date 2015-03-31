@@ -79,4 +79,12 @@ public class DirectSortTest {
 
 
     }
+
+
+    @Test
+    public void testStrategy(){
+        int[] array = new int[]{3,1,2,6,8,9,3};
+        ArrayUtil.sort(array, DirectSort::sort);
+        System.out.println(Arrays.toString(array));
+    }
 }

@@ -47,4 +47,12 @@ public class ArrayUtil {
         sb.append(arr[arr.length - 1]);
         return sb.toString();
     }
+
+    public static <T> void sort(int[] array, SortStrategy sortStrategy){
+        sortStrategy.sort(array);
+    }
+
+    private static void checkArray(){
+
+    }
 }
